@@ -2,87 +2,14 @@
   <br/>
   <h1 class="text-center">Othello</h1>
   <hr />
+
   <table>
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td><div class="white-chip"></div></td>
-          <td><div class="black-chip"></div></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><div class="black-chip"></div></td>
-            <td><div class="white-chip"></div></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>      
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let row of gameState">
+        <td *ngFor="let cell of row.split('')">
+          <div *ngIf="cell == 'x'" class="chip-black"></div>
+          <div *ngIf="cell == 'o'" class="chip-white"></div>
+        </td>
       </tr>
     </tbody>
   </table>

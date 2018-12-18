@@ -18,7 +18,7 @@ td {
     text-align: center;
 }
 
-.white-chip {
+.chip-white {
     height: 60px;
     width: 60px;
     border-radius: 50%;
@@ -37,7 +37,7 @@ td {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=1 );    
 }
 
-.black-chip {
+.chip-black {
     height: 60px;
     width: 60px;
     border-radius: 50%;

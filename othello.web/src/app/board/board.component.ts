@@ -7,6 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoardComponent implements OnInit {
 
+  gameState = [
+    '--------',
+    '--------',
+    '--------',
+    '---ox---',
+    '---xo---',
+    '--------',
+    '--------',
+    '--------',
+  ]
+
   constructor() { }
 
   ngOnInit() {
