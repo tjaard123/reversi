@@ -1,0 +1,10 @@
+/home/tjaard/git/reversi/reversi.api/bin/Debug/netcoreapp2.1/reversi.deps.json
+/home/tjaard/git/reversi/reversi.api/bin/Debug/netcoreapp2.1/reversi.runtimeconfig.json
+/home/tjaard/git/reversi/reversi.api/bin/Debug/netcoreapp2.1/reversi.runtimeconfig.dev.json
+/home/tjaard/git/reversi/reversi.api/bin/Debug/netcoreapp2.1/reversi.dll
+/home/tjaard/git/reversi/reversi.api/bin/Debug/netcoreapp2.1/reversi.pdb
+/home/tjaard/git/reversi/reversi.api/obj/Debug/netcoreapp2.1/reversi.fsprojAssemblyReference.cache
+/home/tjaard/git/reversi/reversi.api/obj/Debug/netcoreapp2.1/reversi.AssemblyInfoInputs.cache
+/home/tjaard/git/reversi/reversi.api/obj/Debug/netcoreapp2.1/reversi.AssemblyInfo.fs
+/home/tjaard/git/reversi/reversi.api/obj/Debug/netcoreapp2.1/reversi.dll
+/home/tjaard/git/reversi/reversi.api/obj/Debug/netcoreapp2.1/reversi.pdb

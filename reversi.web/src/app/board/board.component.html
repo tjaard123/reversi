@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <br />
+  <h1>Reversi</h1>
+  <div class="row">
+    <div class="col-md-4">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td class="align-middle"><h4>Player</h4></td>
+            <td>
+              <div *ngIf="currentPlayer == 'x'" class="chip-black"></div>
+              <div *ngIf="currentPlayer == 'o'" class="chip-white"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-8">
+      <table class="table-board">
+        <tbody>
+          <tr *ngFor="let row of gameState; let x = index">
+            <td *ngFor="let cell of row.split(''); let y = index" (click)="nextMove(x, y)">
+              <div *ngIf="cell == 'x'" class="chip-black"></div>
+              <div *ngIf="cell == 'o'" class="chip-white"></div>
+              <div *ngIf="isValidMove(x, y)" class="chip-black valid-move"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,3 @@
-# Othello
+# Reversi
 
-![othello](othello.jpg)
+![reversi](reversi.jpg)
