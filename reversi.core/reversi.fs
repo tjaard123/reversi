@@ -1,6 +1,6 @@
 namespace Reversi
 
-module Core
+module Core =
 
     type Direction = North | NorthWest | West | SouthWest | South | SouthEast | East | NorthEast
 
