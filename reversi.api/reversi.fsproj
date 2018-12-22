@@ -5,10 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\reversi.core\reversi.core.fsproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Compile Include="Reversi.Core.fs" />
     <Compile Include="Controllers/GameController.fs" />
     <Compile Include="Startup.fs" />
     <Compile Include="Program.fs" />

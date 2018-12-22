@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\reversi.core\reversi.core.fsproj" />
+    <ProjectReference Include="..\reversi.api\reversi.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tests.fs" />

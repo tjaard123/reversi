@@ -1,9 +1,5 @@
 namespace Reversi.Controllers
 
-open System
-open System.Collections.Generic
-open System.Linq
-open System.Threading.Tasks
 open Microsoft.AspNetCore.Mvc
 
 type BoardState = { player: char; board: string[] }

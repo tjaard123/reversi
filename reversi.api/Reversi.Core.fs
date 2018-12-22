@@ -32,7 +32,7 @@ let advance (pos : string) direction n =
     | NorthEast -> string (char (int pos.[0] - n)) + string ((c2i pos.[1]) - n)
 
 let rec IsValidDirection board direction pos i player =
-    printfn "i%d: %s > %A" i pos (at board pos)
+    // printfn "i%d: %s > %A" i pos (at board pos)
     match i with
     | 0 -> IsValidDirection board direction (advance pos direction 1) (i + 1) player
     | 1 ->
