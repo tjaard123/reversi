@@ -18,8 +18,20 @@
     <div class="col-md-8">
       <table class="table-board">
         <tbody>
-          <tr *ngFor="let row of gameState; let x = index">
-            <td *ngFor="let cell of row.split(''); let y = index" (click)="nextMove(x, y)">
+          <tr>
+            <td></td>
+            <td>A</td>
+            <td>B</td>
+            <td>C</td>
+            <td>D</td>
+            <td>E</td>
+            <td>F</td>
+            <td>G</td>
+            <td>H</td>
+          </tr>
+          <tr *ngFor="let row of gameState; let y = index">
+            <td>{{y + 1}}</td>
+            <td *ngFor="let cell of row.split(''); let x = index" (click)="nextMove(x, y)">
               <div *ngIf="cell == 'x'" class="chip-black"></div>
               <div *ngIf="cell == 'o'" class="chip-white"></div>
               <div *ngIf="isValidMove(x, y)" class="chip-black valid-move"></div>

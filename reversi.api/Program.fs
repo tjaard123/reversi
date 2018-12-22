@@ -1,4 +1,4 @@
-namespace reversi
+namespace Reversi
 
 open System
 open System.Collections.Generic
