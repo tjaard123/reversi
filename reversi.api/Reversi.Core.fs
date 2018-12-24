@@ -66,16 +66,53 @@ let rec GetValidMoves board player i validMoves =
         then GetValidMoves board player (i + 1) (allMoves.[i] :: validMoves)
         else GetValidMoves board player (i + 1) validMoves
 
+let rec Move board move turns player i (newBoard:string) =
+    if i = allMoves.Length then [|newBoard.[0..7]; newBoard.[8..15]; newBoard.[16..23]; newBoard.[24..31]; newBoard.[32..39]; newBoard.[40..47]; newBoard.[48..55]; newBoard.[56..63] |]
+    else
+        if allMoves.[i] = move || Array.exists (fun x -> x = allMoves.[i]) turns then Move board move turns player (i + 1) (newBoard + string player)
+        else Move board move turns player (i + 1) (newBoard + string (at board allMoves.[i]).Value)  // Unchanged
+
+let rec GetTurns board direction pos i player turns =
+    // printfn "i%d: %s > %A" i pos (at board pos)
+    match i with
+    | 0 -> GetTurns board direction (advance pos direction 1) (i + 1) player turns
+    | 1 ->
+        match at board pos with
+        | Some(v) when v = player || v = '-' -> [||]
+        | Some(_) -> GetTurns board direction (advance pos direction 1) (i + 1) player (Array.append [|pos|] turns)
+        | None -> [||]
+    | _ ->
+        match at board pos with
+        | Some(v) when v = player -> turns
+        | Some(v) when v = '-' -> [||]
+        | Some(_) -> GetTurns board direction (advance pos direction 1) (i + 1) player (Array.append [|pos|] turns)
+        | None -> [||]
+
+let GetTurns' board pos player =
+    Array.concat [|
+        GetTurns board North pos 0 player [||];
+        GetTurns board NorthWest pos 0 player [||];
+        GetTurns board West pos 0 player [||];
+        GetTurns board SouthWest pos 0 player [||];
+        GetTurns board South pos 0 player [||];
+        GetTurns board SouthEast pos 0 player [||];
+        GetTurns board East pos 0 player [||];
+        GetTurns board NorthEast pos 0 player [||]
+    |]
+
 
 // let startBoard = [|
-//     "--------";
-//     "--------";
-//     "--------";
-//     "-oxox---";
-//     "---xo---";
-//     "--------";
-//     "--------";
-//     "--------";
+//     "o----x--";
+//     "x-x-o---";
+//     "-ooo----";
+//     "xo-oox--";
+//     "-ooo----";
+//     "x-o-x---";
+//     "--o-----";
+//     "--x-----";
 // |]
 // printfn "%A" (GetValidMoves startBoard 'x' 0 [])
 // printfn "%A" (IsValidMove startBoard "C4" 'x')
+// let turns = GetTurns' startBoard "C4" 'x'
+// let newBoard = Move startBoard turns 'x' 0 ""
+// let newBoard' = Array.append [|newBoard.[1..8]|] [|newBoard.[9..16]|]
