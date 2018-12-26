@@ -3,18 +3,23 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
+import { DataStorage } from './data-storage'; 
 import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
+import { NewGameComponent } from './new-game/new-game.component';
 
 const appRoutes: Routes = [
-  { path: 'board', component: BoardComponent },
+  { path: 'game', component: BoardComponent, data: { name: "Hanlu du Plessis" } },
+  { path: 'new', component: NewGameComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    BoardComponent
+    BoardComponent,
+    NewGameComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -22,7 +27,9 @@ const appRoutes: Routes = [
     ),    
     BrowserModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    DataStorage
   ],
   providers: [],
   bootstrap: [AppComponent]

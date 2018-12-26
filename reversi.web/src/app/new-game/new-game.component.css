@@ -1,0 +1,13 @@
+td > img {
+    width: 100%;
+}
+
+td > img:hover {
+    background-image: url('../../assets/img/avatar-background.jpg');
+    background-size: cover;
+    cursor: pointer;
+}
+
+.chip {
+    cursor: pointer;
+}

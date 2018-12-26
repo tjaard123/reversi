@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { DataStorage } from '../data-storage';
+import { Player } from '../player';
 
 @Component({
   selector: 'app-board',
@@ -24,15 +27,42 @@ export class BoardComponent implements OnInit {
     move: '',
   };
 
-  constructor(private http: HttpClient) { }
+  player1: Player = {
+    name: "Player 1",
+    avatar: "row-1-col-1.png",
+    color: "bg-danger",
+    isBot: false
+  };
 
-  ngOnInit() {
-    // this.move();
+  player2: Player = {
+    name: "Player 2",
+    avatar: "row-1-col-2.png",
+    color: "bg-dark",
+    isBot: true
+  }
+
+  constructor(private http: HttpClient, private route: ActivatedRoute, private _data: DataStorage) {
+    if (_data.player1 && _data.player2) {
+      this.player1 = _data.player1;
+      this.player2 = _data.player2;
+    }
+  }
+
+  ngOnInit() {}
+
+  currentPlayerIsBot() {
+    return ((this.game.player == 'x' && this.player1.isBot) || (this.game.player == 'o' && this.player2.isBot));
   }
 
   move(x, y) {
-    this.game.move = `${String.fromCharCode("A".charCodeAt(0) + x)}${y + 1}`;
-    if (this.game.player == 'x' && this.game.validMoves.indexOf(this.game.move) >= 0) {
+    if (this.currentPlayerIsBot()) {
+      this.game.move = this.game.validMoves[Math.floor(Math.random() * this.game.validMoves.length)];
+    }
+    else {
+      this.game.move = `${String.fromCharCode("A".charCodeAt(0) + x)}${y + 1}`;
+    }
+
+    if (this.game.validMoves.indexOf(this.game.move) >= 0) {
 
       this.game.validMoves.splice(0);
 
@@ -40,30 +70,15 @@ export class BoardComponent implements OnInit {
         .toPromise()
         .then((response: any) => {
           this.game = response;
-          this.bumblebeeMove();
+
+          if (this.currentPlayerIsBot()) {
+            this.move(-1, -1);
+          }
         })
         .catch((error) => {
           console.error(error);
         });
-    } else if (this.game.player == 'o') {
-      this.bumblebeeMove();
     }
-  }
-
-  bumblebeeMove() {
-    this.game.move = this.game.validMoves[Math.floor(Math.random() * this.game.validMoves.length)];
-    this.game.validMoves.splice(0);
-
-    this.http.post('http://localhost:5000/api/game', this.game)
-      .toPromise()
-      .then((response: any) => {
-        this.game = response;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    this.game.player = 'x';
   }
 
   isValidMove(x, y) {

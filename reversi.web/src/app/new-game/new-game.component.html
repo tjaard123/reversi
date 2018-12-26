@@ -1,0 +1,115 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <h1>Player 1</h1>
+      <hr />
+      <div class="row">
+        <div class="col-md-6">
+          <input class="form-control form-control-lg" [(ngModel)]="player1.name" type="text" placeholder="Name">
+        </div>
+        <div class="col-md-6">
+          <div class="btn-group btn-block" role="group">
+            <button (click)="player1.isBot = false" style="width: 50%;" type="button" class="btn btn-lg" [ngClass]="{ 'btn-success': !player1.isBot, 'btn-outline-success': player1.isBot }">Human</button>
+            <button (click)="player1.isBot = true" style="width: 50%;" type="button" class="btn btn-lg" [ngClass]="{ 'btn-success': player1.isBot, 'btn-outline-success': !player1.isBot }">Bot</button>
+          </div>
+        </div>
+      </div>
+      <br />
+      <br />
+      <table>
+        <tr *ngFor="let y of [1,2,3]">
+          <td *ngFor="let x of [1,2,3,4,5,6,7,8,9,10,11]" (click)="selectAvatar(x, y, player1)">
+            <img src="../../assets/img/row-{{y}}-col-{{x}}.png">
+          </td>
+        </tr>
+      </table>
+      <br />
+      <br />
+      <div (click)="selectColor('primary', player1)" class="chip mr-2 bg-primary"></div>
+      <div (click)="selectColor('secondary', player1)" class="chip mr-2 bg-secondary"></div>
+      <div (click)="selectColor('success', player1)" class="chip mr-2 bg-success"></div>
+      <div (click)="selectColor('danger', player1)" class="chip mr-2 bg-danger"></div>
+      <div (click)="selectColor('warning', player1)" class="chip mr-2 bg-warning"></div>
+      <div (click)="selectColor('info', player1)" class="chip mr-2 bg-info"></div>
+      <div (click)="selectColor('dark', player1)" class="chip mr-2 bg-dark"></div>
+    </div>
+    <div class="col-md-2">
+      <div class="card avatar" style="width: 18rem;">
+        <div class="card-header">
+          <img src="../../assets/img/{{player1.avatar}}">
+        </div>
+        <div class="card-body text-center">
+          <h5 class="card-title">{{player1.name || "Player 1"}}</h5>
+          <hr />
+          <div class="chip {{player1.color}}"></div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="card avatar avatar-2" style="width: 18rem;">
+        <div class="card-header">
+          <img src="../../assets/img/{{player2.avatar}}">
+        </div>
+        <div class="card-body text-center">
+          <h5 class="card-title">{{player2.name || "Player 2"}}</h5>
+          <hr />
+          <div class="chip {{player2.color}}"></div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h1 class="text-right">Player 2</h1>
+      <hr />
+      <div class="row">
+        <div class="col-md-6">
+          <input class="form-control form-control-lg" [(ngModel)]="player2.name" type="text" placeholder="Name">
+        </div>
+        <div class="col-md-6">
+          <div class="btn-group btn-block" role="group">
+            <button (click)="player2.isBot = false" style="width: 50%;" type="button" class="btn btn-lg" [ngClass]="{ 'btn-success': !player2.isBot, 'btn-outline-success': player2.isBot }">Human</button>
+            <button (click)="player2.isBot = true" style="width: 50%;" type="button" class="btn btn-lg"  [ngClass]="{ 'btn-success': player2.isBot, 'btn-outline-success': !player2.isBot }">Bot</button>
+          </div>
+        </div>
+      </div>
+      <br />
+      <br />
+      <table>
+        <tr *ngFor="let y of [1,2,3]">
+          <td *ngFor="let x of [1,2,3,4,5,6,7,8,9,10,11]" (click)="selectAvatar(x, y, player2)">
+            <img src="../../assets/img/row-{{y}}-col-{{x}}.png">
+          </td>
+        </tr>
+      </table>
+      <br />
+      <br />
+      <div (click)="selectColor('primary', player2)" class="chip mr-2 bg-primary"></div>
+      <div (click)="selectColor('secondary', player2)" class="chip mr-2 bg-secondary"></div>
+      <div (click)="selectColor('success', player2)" class="chip mr-2 bg-success"></div>
+      <div (click)="selectColor('danger', player2)" class="chip mr-2 bg-danger"></div>
+      <div (click)="selectColor('warning', player2)" class="chip mr-2 bg-warning"></div>
+      <div (click)="selectColor('info', player2)" class="chip mr-2 bg-info"></div>
+      <div (click)="selectColor('dark', player2)" class="chip mr-2 bg-dark"></div>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="offset-md-4 col-md-4">
+      <button (click)="start()" class="btn btn-success btn-lg btn-block">
+        <h1>START</h1>
+      </button>
+    </div>
+  </div>
+</div>

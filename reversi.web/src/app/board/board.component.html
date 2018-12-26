@@ -1,26 +1,21 @@
 <div class="container-fluid">
-  <br />
-  <h1>Reversi</h1>
-  <hr />
   <div class="row">
     <div class="col-md-3">
-      <div [ngClass]="{ 'player-active': game.player == 'x' }" class="card" style="width: 18rem;">
-        <img class="card-img-top" src="../../assets/img/human.jpg" alt="Card image cap">
-        <div class="card-body text-center">
-          <h5 class="card-title">Hanlu</h5>
+      <div class="card avatar" style="width: 18rem; margin-left: auto;">
+        <div class="card-header">
+          <img src="../../assets/img/{{player1.avatar}}">
+        </div>
+        <div class="card-body text-center" [ngClass]="{ 'player-active': game.player == 'x' }">
+          <h5 class="card-title">{{player1.name || "Player 1"}}</h5>
           <h1>{{playerScore('x')}}</h1>
           <hr />
-          <div class="chip-black"></div>
+          <div class="chip {{player1.color}}"></div>
         </div>
       </div>
-
-      <!-- <pre>
-{{game | json}}
-      </pre> -->
     </div>
 
     <div class="col-md-6">
-      <table class="table-board">
+      <table class="table-board center">
         <tbody>
           <tr>
             <td></td>
@@ -37,9 +32,9 @@
           <tr *ngFor="let row of game.board; let y = index">
             <td>{{y + 1}}</td>
             <td *ngFor="let cell of row.split(''); let x = index" [ngClass]="{ 'bg-info': isMove(x, y) }" (click)="move(x, y)">
-              <div *ngIf="cell == 'x'" class="chip-black"></div>
-              <div *ngIf="cell == 'o'" class="chip-white"></div>
-              <div *ngIf="isValidMove(x, y)" class="chip-black valid-move"></div>
+              <div *ngIf="cell == 'x'" class="chip {{player1.color}}"></div>
+              <div *ngIf="cell == 'o'" class="chip {{player2.color}}"></div>
+              <!-- <div *ngIf="isValidMove(x, y)" class="chip-black valid-move"></div> -->
             </td>
             <td>{{y + 1}}</td>
           </tr>
@@ -60,20 +55,17 @@
     </div>
 
     <div class="col-md-3">
-      <div [ngClass]="{ 'player-active': game.player == 'o' }" class="card" style="width: 18rem;">
-        <img class="card-img-top" src="../../assets/img/bumblebee.jpg" alt="Card image cap">
-        <div class="card-body text-center">
-          <h5 class="card-title">Bumblebee</h5>
+      <div class="card avatar avatar-2" style="width: 18rem;">
+        <div class="card-header">
+          <img src="../../assets/img/{{player2.avatar}}">
+        </div>
+        <div class="card-body text-center" [ngClass]="{ 'player-active': game.player == 'o' }">
+          <h5 class="card-title">{{player2.name || "Player 1"}}</h5>
           <h1>{{playerScore('o')}}</h1>
           <hr />
-          <div class="chip-white"></div>
-          <hr />
-          <!-- <button *ngIf="game.player == 'o'" (click)="bumblebeeMove()" class="btn btn-success btn-lg btn-block">GO!</button> -->
+          <div class="chip {{player2.color}}"></div>
         </div>
       </div>
-      <!-- <pre>
-  {{game | json}}
-        </pre> -->
     </div>
   </div>
 </div>
