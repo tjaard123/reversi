@@ -23,15 +23,6 @@
           </td>
         </tr>
       </table>
-      <br />
-      <br />
-      <div (click)="selectColor('primary', player1)" class="chip mr-2 bg-primary"></div>
-      <div (click)="selectColor('secondary', player1)" class="chip mr-2 bg-secondary"></div>
-      <div (click)="selectColor('success', player1)" class="chip mr-2 bg-success"></div>
-      <div (click)="selectColor('danger', player1)" class="chip mr-2 bg-danger"></div>
-      <div (click)="selectColor('warning', player1)" class="chip mr-2 bg-warning"></div>
-      <div (click)="selectColor('info', player1)" class="chip mr-2 bg-info"></div>
-      <div (click)="selectColor('dark', player1)" class="chip mr-2 bg-dark"></div>
     </div>
     <div class="col-md-2">
       <div class="card avatar" style="width: 18rem;">
@@ -41,11 +32,7 @@
         <div class="card-body text-center">
           <h5 class="card-title">{{player1.name || "Player 1"}}</h5>
           <hr />
-          <div class="chip {{player1.color}}"></div>
-          <br />
-          <br />
-          <br />
-          <br />
+          <div class="chip" style="background-color: black;"></div>
           <br />
           <br />
         </div>
@@ -60,11 +47,7 @@
         <div class="card-body text-center">
           <h5 class="card-title">{{player2.name || "Player 2"}}</h5>
           <hr />
-          <div class="chip {{player2.color}}"></div>
-          <br />
-          <br />
-          <br />
-          <br />
+          <div class="chip" style="backround-color: white;"></div>
           <br />
           <br />
         </div>
@@ -93,15 +76,6 @@
           </td>
         </tr>
       </table>
-      <br />
-      <br />
-      <div (click)="selectColor('primary', player2)" class="chip mr-2 bg-primary"></div>
-      <div (click)="selectColor('secondary', player2)" class="chip mr-2 bg-secondary"></div>
-      <div (click)="selectColor('success', player2)" class="chip mr-2 bg-success"></div>
-      <div (click)="selectColor('danger', player2)" class="chip mr-2 bg-danger"></div>
-      <div (click)="selectColor('warning', player2)" class="chip mr-2 bg-warning"></div>
-      <div (click)="selectColor('info', player2)" class="chip mr-2 bg-info"></div>
-      <div (click)="selectColor('dark', player2)" class="chip mr-2 bg-dark"></div>
     </div>
   </div>
   <br />

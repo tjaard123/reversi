@@ -3,11 +3,33 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { DataStorage } from '../data-storage';
 import { Player } from '../player';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.css']
+  styleUrls: ['./board.component.css'],
+  animations: [
+    trigger('turn', [
+      state('-', style({
+        transform: 'translateY(500px)',
+        opacity: 0
+      })),
+      state('o', style({
+        backgroundColor: 'white'
+      })),
+      state('x', style({
+        transform: 'rotateY(180deg)',
+        backgroundColor: 'black'
+      })),
+      transition('o <=> x', [
+        animate('0.4s')
+      ]),
+      transition('- => *', [
+        animate('0.7s')
+      ])
+    ]),
+  ],
 })
 export class BoardComponent implements OnInit {
 
@@ -24,20 +46,21 @@ export class BoardComponent implements OnInit {
       '--------',
     ],
     validMoves: ["D3", "C4", "F5", "E6"],
+    turns: [],
     move: '',
   };
+
+  stateBoard = this.game.board.map(y => y.split('').map(x => { return { s: x } }));
 
   player1: Player = {
     name: "Player 1",
     avatar: "row-1-col-1.png",
-    color: "bg-danger",
     isBot: false
   };
 
   player2: Player = {
     name: "Player 2",
     avatar: "row-1-col-2.png",
-    color: "bg-dark",
     isBot: true
   }
 
@@ -63,22 +86,41 @@ export class BoardComponent implements OnInit {
     }
 
     if (this.game.validMoves.indexOf(this.game.move) >= 0) {
+      var moveX = this.game.move[0].charCodeAt(0) - "A".charCodeAt(0);
+      var moveY = parseInt(this.game.move[1]) - 1;
+      this.stateBoard[moveY][moveX].s = this.game.player;
 
-      this.game.validMoves.splice(0);
-
-      this.http.post('http://localhost:5000/api/game', this.game)
-        .toPromise()
-        .then((response: any) => {
-          this.game = response;
-
-          if (this.currentPlayerIsBot()) {
-            this.move(-1, -1);
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      setTimeout(() => this.refreshBoard(), 1000);
     }
+  }
+
+  refreshBoard() {
+    console.log(this.game);
+    this.game.validMoves.splice(0);
+    this.game.board = this.stateBoard.map(y => y.map(x => x.s).join(''));
+
+    this.http.post('http://localhost:5000/api/game', this.game)
+      .toPromise()
+      .then((response: any) => {
+        this.game = response;
+
+        this.turn();
+
+        if (this.currentPlayerIsBot()) {
+          setTimeout(() => this.move(-1, -1), 1000);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  turn() {
+    this.game.turns.forEach(turn => {
+      var x = turn[0].charCodeAt(0) - "A".charCodeAt(0);
+      var y = parseInt(turn[1]) - 1;
+      this.stateBoard[y][x].s = this.game.player == 'x' ? 'o' : 'x';
+    });
   }
 
   isValidMove(x, y) {
