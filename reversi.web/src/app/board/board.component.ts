@@ -95,7 +95,6 @@ export class BoardComponent implements OnInit {
   }
 
   refreshBoard() {
-    console.log(this.game);
     this.game.validMoves.splice(0);
     this.game.board = this.stateBoard.map(y => y.map(x => x.s).join(''));
 
@@ -104,7 +103,7 @@ export class BoardComponent implements OnInit {
       .then((response: any) => {
         this.game = response;
 
-        this.turn();
+        this.turn(0);
 
         if (this.currentPlayerIsBot()) {
           setTimeout(() => this.move(-1, -1), 1000);
@@ -115,12 +114,15 @@ export class BoardComponent implements OnInit {
       });
   }
 
-  turn() {
-    this.game.turns.forEach(turn => {
+  turn(i) {
+    if (i < this.game.turns.length) {
+      var turn = this.game.turns[i]
       var x = turn[0].charCodeAt(0) - "A".charCodeAt(0);
       var y = parseInt(turn[1]) - 1;
       this.stateBoard[y][x].s = this.game.player == 'x' ? 'o' : 'x';
-    });
+
+      setTimeout(() => this.turn(i + 1), 300);
+    }
   }
 
   isValidMove(x, y) {
