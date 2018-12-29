@@ -17,24 +17,7 @@ let startBoard = [|
     "--------";
 |]
 
-let randomTest = [|
-    "--------";
-    "--------";
-    "--------";
-    "-oxox---";
-    "---xo---";
-    "--------";
-    "--------";
-    "--------";
-|]
-
-[<Fact>]
-let ``Starting Moves`` () = Assert.Equal([|"E6"; "F5"; "C4"; "D3"|], GetValidMoves startBoard 'x' 0 [])
-
-[<Fact>]
-let ``Random Test`` () = Assert.Equal([|"E3"; "B4"; "F4"; "C5"; "D6"|], GetValidMoves randomTest 'x' 0 [])
-
-let board = [|
+let testBoard = [|
     "----oxox";
     "---oxx-o";
     "-oxxxxxo";
@@ -46,23 +29,7 @@ let board = [|
 |]
 
 [<Fact>]
-let ``North Moves`` () =
-    Assert.False(IsValidDirection board North "A4" 0 'o')
-    Assert.False(IsValidDirection board North "B4" 0 'o')
-    Assert.False(IsValidDirection board North "C4" 0 'o')
-    Assert.True(IsValidDirection board North "D4" 0 'o')
-    Assert.True(IsValidDirection board North "E4" 0 'o')
-    Assert.False(IsValidDirection board North "F4" 0 'o')
-    Assert.False(IsValidDirection board North "G4" 0 'o')
-    Assert.False(IsValidDirection board North "H4" 0 'o')
+let ``Starting Moves`` () = Assert.Equal([|"E6"; "F5"; "C4"; "D3"|], getValidMoves startBoard 'x' 0 [])
 
 [<Fact>]
-let ``South Moves`` () =
-    Assert.False(IsValidDirection board South "A5" 0 'o')
-    Assert.False(IsValidDirection board South "B5" 0 'o')
-    Assert.False(IsValidDirection board South "C5" 0 'o')
-    Assert.True(IsValidDirection board South "D5" 0 'o')
-    Assert.True(IsValidDirection board South "E5" 0 'o')
-    Assert.False(IsValidDirection board South "F5" 0 'o')
-    Assert.False(IsValidDirection board South "G5" 0 'o')
-    Assert.False(IsValidDirection board South "H5" 0 'o')
+let ``Valid Moves`` () = Assert.Equal([|"G7"; "H5"; "F5"; "E5"; "D5"; "B5"; "H4"; "F4"; "E4"; "D4"; "B4"; "G2"|], getValidMoves testBoard 'o' 0 [])

@@ -1,7 +1,7 @@
 module Reversi.Core
 
 type Direction = North | NorthWest | West | SouthWest | South | SouthEast | East | NorthEast
-let allMoves = [|
+let Positions = [|
     "A1"; "B1"; "C1"; "D1"; "E1"; "F1"; "G1"; "H1";
     "A2"; "B2"; "C2"; "D2"; "E2"; "F2"; "G2"; "H2";
     "A3"; "B3"; "C3"; "D3"; "E3"; "F3"; "G3"; "H3";
@@ -14,7 +14,6 @@ let allMoves = [|
 
 let c2i = System.Globalization.CharUnicodeInfo.GetDigitValue
 let pos2xy (pos:string) = (int pos.[0] - int 'A', (c2i pos.[1]) - 1)
-
 let at (board: string[]) pos =
     match pos2xy pos with
     | (x, y) when x >= 0 && x <= 7 && y >= 0 && y <= 7 -> Some(board.[y].[x])
@@ -31,88 +30,42 @@ let advance (pos : string) direction n =
     | East -> string (char (int pos.[0] - n)) + string pos.[1]
     | NorthEast -> string (char (int pos.[0] - n)) + string ((c2i pos.[1]) - n)
 
-let rec IsValidDirection board direction pos i player =
-    // printfn "i%d: %s > %A" i pos (at board pos)
+let rec getTurnsInDirection board player direction pos i turns =
     match i with
-    | 0 -> IsValidDirection board direction (advance pos direction 1) (i + 1) player
-    | 1 ->
-        match at board pos with
-        | Some(v) when v = player || v = '-' -> false
-        | Some(_) -> IsValidDirection board direction (advance pos direction 1) (i + 1) player
-        | None -> false
-    | _ ->
-        match at board pos with
-        | Some(v) when v = player -> true
-        | Some(v) when v = '-' -> false
-        | Some(_) -> IsValidDirection board direction (advance pos direction 1) (i + 1) player
-        | None -> false
-
-let IsValidMove board pos player =
-    if at board pos = Some('-') && (IsValidDirection board North pos 0 player
-        || IsValidDirection board NorthWest pos 0 player
-        || IsValidDirection board West pos 0 player
-        || IsValidDirection board SouthWest pos 0 player
-        || IsValidDirection board South pos 0 player
-        || IsValidDirection board SouthEast pos 0 player
-        || IsValidDirection board East pos 0 player
-        || IsValidDirection board NorthEast pos 0 player)
-    then true
-    else false
-
-let rec GetValidMoves board player i validMoves =
-    if i = allMoves.Length then validMoves
-    else
-        if IsValidMove board allMoves.[i] player
-        then GetValidMoves board player (i + 1) (allMoves.[i] :: validMoves)
-        else GetValidMoves board player (i + 1) validMoves
-
-let rec Move board move turns player i (newBoard:string) =
-    if i = allMoves.Length then [|newBoard.[0..7]; newBoard.[8..15]; newBoard.[16..23]; newBoard.[24..31]; newBoard.[32..39]; newBoard.[40..47]; newBoard.[48..55]; newBoard.[56..63] |]
-    else
-        if allMoves.[i] = move || Array.exists (fun x -> x = allMoves.[i]) turns then Move board move turns player (i + 1) (newBoard + string player)
-        else Move board move turns player (i + 1) (newBoard + string (at board allMoves.[i]).Value)  // Unchanged
-
-let rec GetTurns board direction pos i player turns =
-    // printfn "i%d: %s > %A" i pos (at board pos)
-    match i with
-    | 0 -> GetTurns board direction (advance pos direction 1) (i + 1) player turns
+    | 0 -> getTurnsInDirection board player direction (advance pos direction 1) (i + 1) turns
     | 1 ->
         match at board pos with
         | Some(v) when v = player || v = '-' -> [||]
-        | Some(_) -> GetTurns board direction (advance pos direction 1) (i + 1) player (Array.append [|pos|] turns)
+        | Some(_) -> getTurnsInDirection board player direction (advance pos direction 1) (i + 1) (Array.append [|pos|] turns)
         | None -> [||]
     | _ ->
         match at board pos with
         | Some(v) when v = player -> turns
         | Some(v) when v = '-' -> [||]
-        | Some(_) -> GetTurns board direction (advance pos direction 1) (i + 1) player (Array.append [|pos|] turns)
+        | Some(_) -> getTurnsInDirection board player direction (advance pos direction 1) (i + 1) (Array.append [|pos|] turns)
         | None -> [||]
 
-let GetTurns' board pos player =
+let getTurns board player move =
     Array.concat [|
-        GetTurns board North pos 0 player [||];
-        GetTurns board NorthWest pos 0 player [||];
-        GetTurns board West pos 0 player [||];
-        GetTurns board SouthWest pos 0 player [||];
-        GetTurns board South pos 0 player [||];
-        GetTurns board SouthEast pos 0 player [||];
-        GetTurns board East pos 0 player [||];
-        GetTurns board NorthEast pos 0 player [||]
+        getTurnsInDirection board player North move 0 [||];
+        getTurnsInDirection board player NorthWest move 0 [||];
+        getTurnsInDirection board player West move 0 [||];
+        getTurnsInDirection board player SouthWest move 0 [||];
+        getTurnsInDirection board player South move 0 [||];
+        getTurnsInDirection board player SouthEast move 0 [||];
+        getTurnsInDirection board player East move 0 [||];
+        getTurnsInDirection board player NorthEast move 0 [||]
     |]
 
+let rec getValidMoves board player i validMoves =
+    if i = Positions.Length then validMoves
+    else
+        if (at board Positions.[i] = Some('-')) && (getTurns board player Positions.[i]).Length > 0
+        then getValidMoves board player (i + 1) (Positions.[i] :: validMoves)
+        else getValidMoves board player (i + 1) validMoves
 
-// let startBoard = [|
-//     "o----x--";
-//     "x-x-o---";
-//     "-ooo----";
-//     "xo-oox--";
-//     "-ooo----";
-//     "x-o-x---";
-//     "--o-----";
-//     "--x-----";
-// |]
-// printfn "%A" (GetValidMoves startBoard 'x' 0 [])
-// printfn "%A" (IsValidMove startBoard "C4" 'x')
-// let turns = GetTurns' startBoard "C4" 'x'
-// let newBoard = Move startBoard turns 'x' 0 ""
-// let newBoard' = Array.append [|newBoard.[1..8]|] [|newBoard.[9..16]|]
+let rec move board player pos turns i (newBoard:string) =
+    if i = Positions.Length then [|newBoard.[0..7]; newBoard.[8..15]; newBoard.[16..23]; newBoard.[24..31]; newBoard.[32..39]; newBoard.[40..47]; newBoard.[48..55]; newBoard.[56..63] |]
+    else
+        if Positions.[i] = pos || Array.exists (fun x -> x = Positions.[i]) turns then move board player pos turns (i + 1) (newBoard + string player)
+        else move board player pos turns (i + 1) (newBoard + string (at board Positions.[i]).Value)  // Unchanged

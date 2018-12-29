@@ -13,14 +13,12 @@ export class NewGameComponent implements OnInit {
   player1: Player = {
     name: "",
     avatar: "row-1-col-1.png",
-    color: "bg-primary",
     isBot: false
   }
 
   player2: Player = {
     name: "",
     avatar: "row-1-col-2.png",
-    color: "bg-danger",
     isBot: true
   }
 
@@ -31,10 +29,6 @@ export class NewGameComponent implements OnInit {
 
   selectAvatar(x, y, player) {
     player.avatar = `row-${y}-col-${x}.png`;
-  }
-
-  selectColor(color, player) {
-    player.color = `bg-${color}`;
   }
 
   start() {

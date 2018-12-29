@@ -17,10 +17,10 @@ type GameController () =
 
     [<HttpPost>]
     member this.Post([<FromBody>] state:Game) =
-        let turns = Reversi.Core.GetTurns' state.board state.move state.player
-        let newBoard = Reversi.Core.Move state.board state.move turns state.player 0 ""
+        let turns = Reversi.Core.getTurns state.board state.player state.move 
+        let newBoard = Reversi.Core.move state.board state.player state.move turns 0 ""
         let newPlayer = if state.player = 'o' then 'x' else 'o'
-        let validMoves = Reversi.Core.GetValidMoves newBoard newPlayer 0 []
+        let validMoves = Reversi.Core.getValidMoves newBoard newPlayer 0 []
 
         {
             player = newPlayer;
